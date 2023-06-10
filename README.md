@@ -4,6 +4,8 @@ This project is a life expectancy prediction system that uses linear regression 
 # Usage
 To use this life expectancy prediction system, clone the repository and run the Flask app using the following commands:
 ```
+npm i
+npm run dev
 pip install -r requirements.txt
 python app.py
 ```
