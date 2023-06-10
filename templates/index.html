@@ -5,12 +5,75 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flowbite Flask</title>
+    <title>Life Expectancy Predictor</title>
     <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}">
 </head>
-
-<body>
-    
+<body>              
+    <h1 class="mb-4 mt-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Life Expectancy Predictor</h1>
+    <div class="mx-auto w-1/2">
+        <form action="{{ url_for('predict') }}" method="post">
+            <div class="mb-6">
+              <label for="Adult Mortality" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Adult Mortality Rates per 1000 population (Deaths between ages 18 to 60)</label>
+              <input type="number" name="Adult Mortality" min="0" max="1000" id="Adult Mortality" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Alcohol" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alcohol Consumption recorded per capita for ages 15+ ( in litres )</label>
+              <input type="number" name="Alcohol" min="0" max="50" step="0.1" id="Alcohol" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Percentage Expenditure" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expenditure on Health as percentage of GDP per capita ( in % )</label>
+              <input type="number" name="Percentage Expenditure" step="0.1" min="0" id="Percentage Expenditure" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Hepatitis B" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hepatitis B (HepB) Immunization Coverage among 1-yr-olds ( in % )</label>
+              <input type="number" name="Hepatitis B" step="0.1" min="0" max="100" id="Hepatitis B" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Measles" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of Reported cases of Measles per 1000 population</label>
+              <input type="number" name="Measles" min="0" max="1000" id="Measles" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="BMI" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Average Body Mass Index of the Country's population</label>
+              <input type="number" name="BMI" step="0.1" min="0" id="BMI" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Polio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Polio (Pol3) immunization coverage among 1-yr-olds ( in % )</label>
+              <input type="number" name="Polio" step="0.1" min="0" max="100" id="Polio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Total expenditure" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expenditure on Health as a percentage of Total Government Expenditure ( in % )</label>
+              <input type="number" name="Total expenditure" step="0.1" min="0" max="100" id="Total expenditure" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Diphtheria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diphtheria, Tetanus, Toxoid and Pertussis (DTP3) immunizations coverage among 1-yr-olds ( in % )</label>
+              <input type="number" name="Diphtheria" step="0.1" min="0" max="100" id="Diphtheria" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="HIV/AIDS" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">HIV/AIDS Deaths per 1000 live births (0-4 yrs)</label>
+              <input type="number" name="HIV/AIDS" step="0.1" min="0" max="1000" id="HIV/AIDS" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="GDP" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gross Domestic Product per capita ( in USD )</label>
+              <input type="number" name="GDP" step="0.1" min="0" id="GDP" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Population" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Population of the Country</label>
+              <input type="number" name="Population" min="500" id="Population" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Income composition of resources" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Income Composition of Resources</label>
+              <input type="number" name="Income composition of resources" step="0.1" min="0" max="1" id="Income composition of resources" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <div class="mb-6">
+              <label for="Schooling" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Number of years of Schooling</label>
+              <input type="number" name="Schooling" step="0.1" min="0" id="Schooling" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" value="Predict">Submit</button>
+          </form>
+    </div>
+    {% if prediction %}
+        <p class="mb-4 mt-4 text-xl font-bold leading-none tracking-tight text-gray-900 dark:text-white text-center">Predicted Life Expectancy: {{ prediction }} years</p>
+    {% endif %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
 
